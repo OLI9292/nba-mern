@@ -1,0 +1,79 @@
+body, html {
+  width: 100%;
+  margin: auto;
+}
+
+.teamNav {
+  position: fixed;
+  width: 250px;
+  left: 0;
+  bottom: 0;
+  background-color: #C6CFD4;
+  height: 80%;
+  letter-spacing: 1px;
+}
+
+.mainNav {
+  height: 50px;
+  font-family: 'VT323';
+  text-align: center;
+  font-size: 45px;
+  letter-spacing: 1px;
+  background-color: #CD6D18;
+  color: white;
+  border-top: 5px solid black;
+}
+
+.conference {
+  width: 100%;
+  height: 50px;
+  top: 50px;
+}
+
+.west, .east {
+  float: left;
+  width: 125px;
+  height: 100%;
+  line-height: 50px;
+  text-align: center;
+  font-family: 'VT323';
+  font-size: 32px;
+  color: white;
+  cursor: pointer;
+  border-top: 5px solid black;
+  border-bottom: 5px solid black;
+}
+
+.west:hover, .east:hover {
+  color: black;
+}
+
+.west {
+  background-color: #ED174B;
+}
+
+.east {
+  background-color: #0366AC;
+}
+
+ul.teams {
+  position: absolute;
+  height: 75%;
+  bottom: 0;
+  text-align: left;
+  font-family: 'VT323';
+  list-style-type: none;
+  line-height: 30px;
+  font-size: 20px;
+  color: black;
+  cursor: pointer;
+}
+
+a:link {
+  color: black;
+  text-decoration: none;
+}
+
+a:visited {
+  color: black;
+}
