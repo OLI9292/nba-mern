@@ -7,7 +7,7 @@ var teams = require('./teams');
 var App = React.createClass({
   render: function() {
     return(
-      <TeamNav data={teams} />
+      <TeamNav teams={teams} />
     );
   }
 });
