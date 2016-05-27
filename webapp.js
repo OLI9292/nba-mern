@@ -17,7 +17,7 @@ app.get('/', function(req, res) {
 });
 
 app.get('/team/*', function(req, res){
-  nba_db.collection('nba_player_stats').find( {'TEAM_ID': parseInt(req.query['team']) }).toArray(function(err, data){
+  nba_db.collection('nba_player_stats').find( {'TEAM_NAME': req.query['team'] }).toArray(function(err, data){
     res.send(data);
   });
 });
