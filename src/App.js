@@ -1,5 +1,7 @@
 var $ = require('jquery');
 var d3 = require('d3');
+var moment = require('moment');
+var drawWinGraph = require('./WinGraph.js');
 var gameClips = require('./data/gameClips.json')
 
 var ec_teams = [
@@ -150,8 +152,9 @@ $(document).ready(function() {
     $('.winStream').append(winStream);
     $('.winStream li').hover(function() {
       var leftOffset = getOffset(this)['left'];
-      $('.gameLogs').append('<p class="miniGameBox" style="left: ' + (leftOffset+30) + 
-                            'px">' + data[$(this).index()][6] + '<br>' + data[$(this).index()][26] + 
+      $('.gameLogs').append('<p class="miniGameBox" style="left: ' + (leftOffset+26) + 
+                            'px">' + moment(data[$(this).index()][5]).format("MMM Do YY") + '<br>' + 
+                            '<span class="matchup">' + data[$(this).index()][6] + '</span><br>' + data[$(this).index()][26] + 
                             ' - ' + (data[$(this).index()][26] - data[$(this).index()][27]) + '</p>' + 
                             '<p class="verticalLine" style="left: ' + (leftOffset + 2) + 
                             'px"></p>');
@@ -163,30 +166,32 @@ $(document).ready(function() {
       loadImage('/logos/' + team, 'logo', teamStyle, 32, 30, '.gameLogs');
       loadImage('/logos/' + opponent, 'logo', opponentStyle, 32, 30, '.gameLogs');
     },
-    function() {
-      $('.logo').remove();
-      $('.miniGameBox').remove();
-      $('.verticalLine').remove();
+      function() {
+        $('.logo').remove();
+        $('.miniGameBox').remove();
+        $('.verticalLine').remove();
     });
 
     $('.winStream li').click(function() {
       $('iframe').remove();
-      var abbrMatchupA = (data[$(this).index()][6].split(' ')[0] + '_' + data[$(this).index()][6].split(' ')[2]).toLowerCase()
-      var abbrMatchupB = (data[$(this).index()][6].split(' ')[2] + '_' + data[$(this).index()][6].split(' ')[0]).toLowerCase()
+      var abbrMatchupA = (data[$(this).index()][6].split(' ')[0] + '_' + 
+                          data[$(this).index()][6].split(' ')[2]).toLowerCase();
+      var abbrMatchupB = (data[$(this).index()][6].split(' ')[2] + '_' + 
+                          data[$(this).index()][6].split(' ')[0]).toLowerCase();
       var gamesOnThisDate = gameClips[data[$(this).index()][5]];
       for (var i in gamesOnThisDate) {
-        if (gamesOnThisDate[i][abbrMatchupA]) { var clip = gamesOnThisDate[i][abbrMatchupA]; }
-        if (gamesOnThisDate[i][abbrMatchupB]) { var clip = gamesOnThisDate[i][abbrMatchupB]; }
+        if (gamesOnThisDate[i][abbrMatchupA]) { var clip = gamesOnThisDate[i][abbrMatchupA]; break; }
+        if (gamesOnThisDate[i][abbrMatchupB]) { var clip = gamesOnThisDate[i][abbrMatchupB]; break; }
       }
-      var clip = clip.replace('watch?v=', 'embed/')
-      $('#iframe-container').append('<iframe width="546" height="409.5" frameborder="0" allowfullscreen src="' + clip + 
+      $('#iframe-container').append('<iframe width="546" height="409.5" frameborder="0" allowfullscreen src="' + 
+                                    clip.replace('watch?v=', 'embed/') + 
                                     '?color=white&ps=docs&theme=light&modestbranding=1&autoplay=1&showinfo=0&rel=0"></iframe>');
     });
   };
 
   function getTeamGameLogs(team) {
     var url = 'http://stats.nba.com/stats/leaguegamelog?Counter=1000&Direction=DESC&LeagueID=00&' +
-              'PlayerOrTeam=T&Season=2015-16&SeasonType=Regular+Season&Sorter=PTS'
+              'PlayerOrTeam=T&Season=2015-16&SeasonType=Regular+Season&Sorter=PTS';
     $.ajax({
       type: 'GET',
       dataType: 'jsonp',
@@ -200,12 +205,15 @@ $(document).ready(function() {
                               return (parseInt(a[4]) < parseInt(b[4])) ? -1 : 1; 
                             });
         makeWinStream(gameLogs);
+
+        drawWinGraph(gameLogs);
       }
     });
   };
   
   function getTeam(team) {
     $('.winStream li').remove();
+    $('svg').remove();
     $('.gameLogs').css('visibility', 'hidden');
 
     var teamName = team.includes('Portland') ? 'Trail Blazers' : team.split(' ').pop(),
@@ -243,11 +251,5 @@ $(document).ready(function() {
   $('.west').click(function() { resetNav('west'); });
   $('.east').click(function() { resetNav('east'); });
   resetNav('west');
-
-  /*
-  <iframe width="546" height="409.5" frameborder="0" allowfullscreen
-              src="https://www.youtube.com/embed/kxmLIA0hS0E?color=white&ps=docs&theme=light&modestbranding=1&autoplay=1&showinfo=0&rel=0">
-      </iframe>
-  */
 });
 

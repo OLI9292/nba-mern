@@ -91,9 +91,32 @@ a:visited {
 #winStream-heading {
   position: fixed;
   left: 285px;
-  bottom: 110px;
+  top: 547px;
   font-family: 'VT323';
   font-size: 32px;
+  z-index: 1;
+}
+
+#gameLogs-background {
+  position: fixed;
+  left: 250px;
+  top: 567px;
+  background-color: #C6CFD4;
+  opacity: .5;
+  width: 840px;
+  height: 45px;
+  z-index: -1;
+}
+
+#gameLogs-background2 {
+  position: fixed;
+  left: 250px;
+  top: 705px;
+  background-color: #C6CFD4;
+  opacity: .5;
+  width: 840px;
+  height: 45px;
+  z-index: -1;
 }
 
 .winStream {
@@ -103,7 +126,7 @@ a:visited {
   font-family: 'Inconsolata';
   letter-spacing: 1.5px;
   font-weight: bold;
-  bottom: 0;
+  top: 550px;
   padding-top: 60px;
   border-top: 2px solid black;
 }
@@ -114,6 +137,7 @@ a:visited {
   height: 100px;
   cursor: pointer;
   line-height: 200px;
+  z-index: 1;
 }
 
 .miniGameBox {
@@ -123,8 +147,17 @@ a:visited {
   letter-spacing: 1px;
   line-height: 20px;
   font-weight: bold;
-  font-size: 18px;
-  bottom: 65px;
+  font-size: 16px;
+  top: 600px;
+  background-color: white;
+}
+
+.gameLogs img {
+  top: 630px;
+}
+
+.miniGameBox span {
+  font-size: 20px;
 }
 
 .verticalLine {
@@ -132,6 +165,7 @@ a:visited {
   border-left: 2px solid black;
   bottom: 20px;
   height: 50px;
+  top: 650px;
 }
 
 #iframe {
@@ -148,3 +182,22 @@ img.logo {
   position: absolute;
   bottom: 95px;
 }
+
+.winGraph {
+  position: absolute;
+  left: 243px;
+  top: 579px;
+}
+
+path { 
+  stroke: black;
+  stroke-width: 2px;
+  fill: none;
+}
+
+.axis path,
+.axis line {
+    fill: none;
+    stroke: none;
+}
+
